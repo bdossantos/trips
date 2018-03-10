@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+require 'json'
+
+trips =  []
+
+CSV.foreach('trips.csv', quote_char: '"', col_sep: ',', row_sep: :auto, headers: true) do |row|
+  trip = {
+    'type': 'Feature',
+    'geometry': {
+      'type': 'Point',
+      'coordinates': [
+        # latitude then longitude, cuz GeoJson
+        row[3],
+        row[2]
+      ]
+    },
+    'properties': {
+      'Location': row[1],
+      'Date': row[0],
+      'marker-size': 'small'
+    }
+  }
+
+  trips << trip
+end
+
+trips = {
+  'type': 'FeatureCollection',
+  'features': trips
+}
+
+File.open('trips.geojson', 'w') do |f|
+  f.puts trips.to_json
+end

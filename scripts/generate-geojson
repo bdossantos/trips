@@ -17,8 +17,8 @@ CSV.foreach('trips.csv', quote_char: '"', col_sep: ',', row_sep: :auto, headers:
       ]
     },
     'properties': {
-      'Location': row[1],
       'Date': row[0],
+      'Location': row[1],
       'marker-size': 'small'
     }
   }

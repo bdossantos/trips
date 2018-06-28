@@ -3,9 +3,24 @@
 require 'csv'
 require 'json'
 
-trips =  []
+trips = []
 
 CSV.foreach('trips.csv', quote_char: '"', col_sep: ',', row_sep: :auto, headers: true) do |row|
+  # https://www.mapbox.com/base/styling/icons/
+  marker_symbol =
+    case row[4]
+    when /run/i, /hike/i
+      'pitch'
+    when /business/i
+      'suitcase'
+    when /tourism/i
+      'museum'
+    when /swim/i, /scuba diving/i
+      'swimming'
+    else
+      'marker'
+    end
+
   trip = {
     'type': 'Feature',
     'geometry': {
@@ -20,7 +35,9 @@ CSV.foreach('trips.csv', quote_char: '"', col_sep: ',', row_sep: :auto, headers:
       'Date': row[0],
       'Location': row[1],
       'Note': row[4],
-      'marker-size': 'small'
+      'marker-size': 'small',
+      'marker-symbol': marker_symbol,
+      'marker-color': '#3887be'
     }
   }
 

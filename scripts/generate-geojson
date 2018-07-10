@@ -49,15 +49,11 @@ trips = {
   'features': trips
 }
 
-File.open('trips.geojson', 'w') do |f|
-  f.puts trips.to_json
-end
-
 begin
   file = File.open('trips.geojson', 'w')
   file.puts trips.to_json
 rescue IOError => e
   puts "Something went wrong: #{e}"
 ensure
-  file.close unless file.nil?
+  file.close unless file&.nil?
 end

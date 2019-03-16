@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'csv'
+require 'english'
 require 'json'
 
 trips = []
@@ -36,7 +37,7 @@ CSV.foreach('trips.csv', quote_char: '"', col_sep: ',', row_sep: :auto, headers:
       'Location': row[1],
       'Note': row[4],
       'marker-size': 'small',
-      'marker-symbol': $.,
+      'marker-symbol': $INPUT_LINE_NUMBER,
       'marker-color': '#3bb2d0'
     }
   }
